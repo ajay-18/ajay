@@ -30,4 +30,21 @@ app.post("/new_order",(req,res)=>{
 			message:"invalid order creation"
 		});
 	}
+});
+
+app.patch("/order/:id",(req,res)=>{
+	const order_id=req.params.id;
+	const order_update=req.body;
+	for(let order of orders){
+		if(order.id==order_id)
+		{
+			order.product_name=order_update.product_name;
+			order.customer_name=order_update.customer_name;
+			order.product_qty=order_update.product_qty;
+            return res
+            .status(200)
+            .json({message:"updated successfully",date:order})
+		}
+	}
+	res.status(404).json({message:"invalid order_id"})
 })
